@@ -1,4 +1,4 @@
 FROM nginx:stable-alpine
 
 COPY src /usr/share/nginx/html
-RUN echo "Hello world"
+RUN cat src/index.html
