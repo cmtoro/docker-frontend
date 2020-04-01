@@ -1,14 +1,14 @@
 version: 1
 jobs:
-	build:
-		machine: true
-		steps:
-			- add_ssh_keys
-				fingerprints:
-					- "80:f9:d9:4c:e7:4b:e2:b3:11:64:d1:99:9d:64:86:f5"
-			- checkout
-			- run: docker login -u $DOCKER_USER -p $DOCKER_PASS
-			- run: cd dockerfile
-			- run: docker build -t cmtoro-nginx:$CIRCLE_SHA1
-			- run: docker push cmtoro-nginx:$CIRCLE_SHA1
-			- run: ssh -o StrictHostKeyChecking=no ubuntu@18.230.9.143 "/bin/bash /home/ubuntu/docker/deploy.sh $CIRCLE_SHA1"
+  build:
+    machine: true
+    steps:
+      - add_ssh_keys
+        fingerprints:
+          - "80:f9:d9:4c:e7:4b:e2:b3:11:64:d1:99:9d:64:86:f5"
+      - checkout
+      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - run: cd dockerfile
+      - run: docker build -t cmtoro-nginx:$CIRCLE_SHA1
+      - run: docker push cmtoro-nginx:$CIRCLE_SHA1
+      - run: ssh -o StrictHostKeyChecking=no ubuntu@18.230.9.143 "/bin/bash /home/ubuntu/docker/deploy.sh $CIRCLE_SHA1"
