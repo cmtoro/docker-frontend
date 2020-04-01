@@ -5,9 +5,9 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "80:f9:d9:4c:e7:4b:e2:b3:11:64:d1:99:9d:64:86:f5"
+            - "40:bf:aa:1e:1f:f6:03:62:24:d1:e3:d5:ac:cd:1b:6b"
       - checkout
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run: docker build -t cmtoro0/cmtoro_nginx:latest .
       - run: docker push cmtoro0/cmtoro_nginx:latest
-      - run: ssh -o StrictHostKeyChecking=no ubuntu@18.230.9.143 "/bin/bash /home/ubuntu/docker/deploy.sh"
+      - run: ssh -o StrictHostKeyChecking=no ubuntu@52.67.1.189 "/bin/bash /home/ubuntu/docker/deploy.sh"
