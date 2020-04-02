@@ -1,3 +1,3 @@
 FROM nginx:stable-alpine
 
-COPY src /usr/share/nginx/html
+COPY my-app/dist/ /usr/share/nginx/html
