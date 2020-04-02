@@ -11,4 +11,4 @@ jobs:
       - run: docker image prune --all --force
       - run: docker build -t cmtoro0/cmtoro_nginx:latest .
       - run: docker push cmtoro0/cmtoro_nginx:latest
-      - run: ssh -o StrictHostKeyChecking=no ubuntu@52.67.1.189 "/bin/bash /home/ubuntu/docker/deploy.sh"
+      - run: ssh -o StrictHostKeyChecking=no ubuntu@18.229.196.155 "/bin/bash /home/ubuntu/docker/deploy.sh"
