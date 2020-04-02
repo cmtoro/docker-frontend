@@ -8,7 +8,7 @@ jobs:
             - "40:bf:aa:1e:1f:f6:03:62:24:d1:e3:d5:ac:cd:1b:6b"
       - checkout
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
-      - run: docker rmi cmtoro0/cmtoro_nginx:latest
+      - run: docker image prune --all --force
       - run: docker build -t cmtoro0/cmtoro_nginx:latest .
       - run: docker push cmtoro0/cmtoro_nginx:latest
       - run: ssh -o StrictHostKeyChecking=no ubuntu@52.67.1.189 "/bin/bash /home/ubuntu/docker/deploy.sh"
