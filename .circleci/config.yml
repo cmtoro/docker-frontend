@@ -9,6 +9,6 @@ jobs:
       - checkout
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run: docker image prune --all --force
-      - run: docker build -t cmtoro0/cmtoro_nginx:latest .
-      - run: docker push cmtoro0/cmtoro_nginx:latest
+      - run: docker build -t cmtoro0/carlos_nginx:latest .
+      - run: docker push cmtoro0/carlos_nginx:latest
       - run: ssh -o StrictHostKeyChecking=no ubuntu@18.229.196.155 "/bin/bash /home/ubuntu/docker/deploy.sh"
