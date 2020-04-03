@@ -63,7 +63,7 @@ jobs:
           name: Run deploy script
           command: ssh -o StrictHostKeyChecking=no ubuntu@54.94.231.248 "/bin/bash /home/ubuntu/docker/deploy.sh"
 workflows:
-  version: 1
+  version: 2
   # The build and deploy workflow
   build_and_deploy:
     jobs:
