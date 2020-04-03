@@ -50,6 +50,8 @@ jobs:
       - run: 
           name: Remove all images
           command: docker image prune --all --force
+      - run: pwd
+      - run: ls
       - run: 
           name: Docker build image
           command: docker build -t cmtoro0/carlos_nginx:latest .
