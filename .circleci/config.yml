@@ -62,7 +62,7 @@ jobs:
           command: docker push cmtoro0/carlos_nginx:latest
       - run:
           name: Run deploy script
-          command: ssh -o StrictHostKeyChecking=no ubuntu@54.94.231.248 "/bin/bash /home/ubuntu/docker/deploy.sh"
+          command: ssh -o StrictHostKeyChecking=no ubuntu@54.173.114.150 "/bin/bash /home/ubuntu/docker/deploy.sh"
 workflows:
   version: 2
   # The build and deploy workflow
