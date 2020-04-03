@@ -12,7 +12,7 @@ jobs:
           fingerprints:
             - "40:bf:aa:1e:1f:f6:03:62:24:d1:e3:d5:ac:cd:1b:6b"
       - checkout
-      - run: cd my-app && yarn install && yarn run ng build --prod --aot --progress=false
+      - run: cd my-app && npm install && npm run build --prod --aot --progress=false
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run: docker image prune --all --force
       - run: docker build -t cmtoro0/carlos_nginx:latest .
