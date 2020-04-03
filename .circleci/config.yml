@@ -4,11 +4,9 @@ jobs:
     branches:
       only:
         - master
-    docker:
-      - image: circleci/node:latest
-    dependencies:
-      pre:
-        - npm install angular-cli@latest -g -s
+    machine
+      node:
+        version: latest
     steps:
       - add_ssh_keys:
           fingerprints:
