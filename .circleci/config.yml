@@ -1,20 +1,64 @@
 version: 1
 jobs:
   build:
-    branches:
-      only:
-        - master
     machine:
       node:
         version: latest
+    working_directory: ~/project/my-app
     steps:
       - add_ssh_keys:
           fingerprints:
             - "40:bf:aa:1e:1f:f6:03:62:24:d1:e3:d5:ac:cd:1b:6b"
       - checkout
-      - run: cd my-app && npm install && npm install -g @angular/cli && ng build --prod --aot --progress=false
-      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
-      - run: docker image prune --all --force
-      - run: docker build -t cmtoro0/carlos_nginx:latest .
-      - run: docker push cmtoro0/carlos_nginx:latest
-      - run: ssh -o StrictHostKeyChecking=no ubuntu@54.94.231.248 "/bin/bash /home/ubuntu/docker/deploy.sh"
+      # Log the current branch
+      - run:
+          name: Show current branch
+          command: echo ${CIRCLE_BRANCH}
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+      - run:
+          name: Install local dependencies
+          command: npm install
+      - save_cache:
+          key: v1-dependencies-{{ checksum "package.json" }}
+          paths:
+              - node_modules
+      - run: 
+          name: Building npm run Build
+          command: npm run build-prod
+      # Cache the dist folder for the deploy job
+      - save_cache:
+          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+              - dist
+  deploy:
+    branches:
+      only:
+        - master
+    machine: true
+    steps:
+      # Log the current branch
+      - run:
+          name: Show current branch
+          command: echo ${CIRCLE_BRANCH}
+      # Restore cache from the build job which contains the
+      # dist folder that needs to be deployed
+      - restore_cache:
+          key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Docker Login
+          command: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - run: 
+          name: Remove all images
+          command: docker image prune --all --force
+      - run: 
+          name: Docker build image
+          command: docker build -t cmtoro0/carlos_nginx:latest .
+      - run: 
+          name: Docker push image
+          command: docker push cmtoro0/carlos_nginx:latest
+      - run:
+          name: Run deploy script
+          command: ssh -o StrictHostKeyChecking=no ubuntu@54.94.231.248 "/bin/bash /home/ubuntu/docker/deploy.sh"
