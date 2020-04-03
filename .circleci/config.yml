@@ -4,7 +4,7 @@ jobs:
     machine:
       node:
         version: latest
-    working_directory: ~/project/my-app
+    working_directory: my-app
     steps:
       - add_ssh_keys:
           fingerprints:
