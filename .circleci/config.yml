@@ -6,7 +6,6 @@ jobs:
         - master
     docker:
       - image: circleci/node:latest
-    machine: true
     dependencies:
       pre:
         - npm install npm@latest -g -s
