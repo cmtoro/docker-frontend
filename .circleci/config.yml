@@ -34,9 +34,6 @@ jobs:
           paths:
               - dist
   deploy:
-    branches:
-      only:
-        - master
     machine: true
     steps:
       # Log the current branch
