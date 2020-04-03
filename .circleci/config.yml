@@ -4,7 +4,7 @@ jobs:
     branches:
       only:
         - master
-    machine
+    machine:
       node:
         version: latest
     steps:
